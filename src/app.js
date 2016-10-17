@@ -1,6 +1,11 @@
-import logger from './logger';
-import $ from 'jquery'
+import init   from './studiant_list';
+import Studiant from './studiant.class';
 
-document.write('Welcome to my application.');
-logger(); // yes
+let studiants = [
+					new Studiant('Clement','Teboul','img/clementT.jpg'),
+					new Studiant('Victor','Mutton','img/victor.jpg'),
+				];
+
+init(studiants);
+
 console.log('app loaded');

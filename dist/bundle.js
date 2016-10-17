@@ -40,45 +40,32 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _logger = __webpack_require__(1);
+	var _studiant_list = __webpack_require__(20);
 
-	var _logger2 = _interopRequireDefault(_logger);
+	var _studiant_list2 = _interopRequireDefault(_studiant_list);
 
-	var _jquery = __webpack_require__(5);
+	var _studiant = __webpack_require__(19);
 
-	var _jquery2 = _interopRequireDefault(_jquery);
+	var _studiant2 = _interopRequireDefault(_studiant);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	document.write('Welcome to my application.');
-	(0, _logger2.default)(); // yes
+	var studiants = [new _studiant2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _studiant2.default('Victor', 'Mutton', 'img/victor.jpg')];
+
+	(0, _studiant_list2.default)(studiants);
+
 	console.log('app loaded');
 
 /***/ },
-/* 1 */
-/***/ function(module, exports) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	exports.default = function () {
-		console.log('logger.js is RUNNING!!');
-	};
-
-/***/ },
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
+/***/ 5:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10303,5 +10290,80 @@
 	} );
 
 
+/***/ },
+
+/***/ 19:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var _class = function _class(name, second_name, icone) {
+		_classCallCheck(this, _class);
+
+		this.name = name;
+		this.second_name = second_name;
+		this.icone = icone;
+		this.status = "Present";
+		this.score = 0;
+	};
+
+	exports.default = _class;
+
+/***/ },
+
+/***/ 20:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = init;
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _studiant = __webpack_require__(19);
+
+	var _studiant2 = _interopRequireDefault(_studiant);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function init(studiants) {
+		var $original = (0, _jquery2.default)('#studiant-list li').detach();
+
+		console.log($original, studiants);
+
+		for (var i = 0; i < studiants.length; i++) {
+			var $clone = $original.clone();
+
+			var $second_name = $clone.find('.card_second_name');
+			$second_name.text(studiants[i].second_name);
+
+			var $name = $clone.find('.card_name');
+			$name.text(studiants[i].name);
+
+			var $status = $clone.find('.card_status');
+			$status.text(studiants[i].status);
+
+			var $score = $clone.find('.card_score');
+			$score.text(studiants[i].score);
+
+			var $icone = $clone.find('img');
+			$icone.attr('src', studiants[i].icone);
+
+			(0, _jquery2.default)('#studiant-list').append($clone);
+		}
+	}
+
 /***/ }
-/******/ ]);
+
+/******/ });
