@@ -47,19 +47,19 @@
 
 	'use strict';
 
-	var _studiant_list = __webpack_require__(20);
+	var _student_list = __webpack_require__(22);
 
-	var _studiant_list2 = _interopRequireDefault(_studiant_list);
+	var _student_list2 = _interopRequireDefault(_student_list);
 
-	var _studiant = __webpack_require__(19);
+	var _student = __webpack_require__(21);
 
-	var _studiant2 = _interopRequireDefault(_studiant);
+	var _student2 = _interopRequireDefault(_student);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var studiants = [new _studiant2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _studiant2.default('Victor', 'Mutton', 'img/victor.jpg')];
+	var students = [new _student2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _student2.default('Victor', 'Mutton', 'img/victor.jpg')];
 
-	(0, _studiant_list2.default)(studiants);
+	(0, _student_list2.default)(students);
 
 	console.log('app loaded');
 
@@ -10292,7 +10292,7 @@
 
 /***/ },
 
-/***/ 19:
+/***/ 21:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10317,7 +10317,7 @@
 
 /***/ },
 
-/***/ 20:
+/***/ 22:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10331,37 +10331,35 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _studiant = __webpack_require__(19);
-
-	var _studiant2 = _interopRequireDefault(_studiant);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function init(studiants) {
-		var $original = (0, _jquery2.default)('#studiant-list li').detach();
+	function init(students) {
+		var $original = (0, _jquery2.default)('#student-list li').detach();
 
-		console.log($original, studiants);
-
-		for (var i = 0; i < studiants.length; i++) {
+		for (var i = 0; i < students.length; i++) {
 			var $clone = $original.clone();
 
 			var $second_name = $clone.find('.card_second_name');
-			$second_name.text(studiants[i].second_name);
+			$second_name.text(students[i].second_name);
 
 			var $name = $clone.find('.card_name');
-			$name.text(studiants[i].name);
+			$name.text(students[i].name);
 
 			var $status = $clone.find('.card_status');
-			$status.text(studiants[i].status);
+			$status.text(students[i].status);
 
 			var $score = $clone.find('.card_score');
-			$score.text(studiants[i].score);
+			$score.text(students[i].score);
 
 			var $icone = $clone.find('img');
-			$icone.attr('src', studiants[i].icone);
+			$icone.attr('src', students[i].icone);
 
-			(0, _jquery2.default)('#studiant-list').append($clone);
+			(0, _jquery2.default)('#student-list').append($clone);
 		}
+
+		(0, _jquery2.default)('#student-list').on('click', 'li', function () {
+			(0, _jquery2.default)('#fat_card');
+		});
 	}
 
 /***/ }
