@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Webpack starter</title>
+	<title>Give me five</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 	<div class="container">
+		<div class="row">
+			<div class="col-md-2 col-md-offset-3">
+				<img src="img/plus.png" alt="bouton_plus" id="add_student" class="bouton">
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-4" id="student-list">
 				<ul class="list-group">
@@ -16,13 +21,18 @@
 						 	<div class="panel-body">
 							 	<div class="row">
 							 		<div class="col-md-6">
-								    	<img src="img/profil.jpg" alt="photo de profil">
+								    	<img src="img/default.jpg" alt="photo de profil" class="profil">
 							  		</div>
 									<div class="col-md-6">
 								    	<p class="card_second_name">Nom: </p>
 								    	<p class="card_name">Prénom: </p>
-								    	<p class="card_status">Status: </p>
-								    	<p class="card_score">Score: </p>	  	
+										<form action="#" method="post">
+											<input type="radio" name="statut" value="present">Présent
+											<input type="radio" name="statut" value="absent">Absent
+											<input type="radio" name="statut" value="retard">Retard
+										</form>	
+										<p class="card_statut"></p>		    
+										<p class="card_score">Score: </p>	  	
 									</div>
 						  		</div>
 							</div>
@@ -30,27 +40,27 @@
 					</li>
 				</ul>
   			</div>
-			<div class="col-md-7 col-md-offset-1" id="fat_card">
+			<div class="col-md-7 col-md-offset-1" id="detailled_card">
 				<div class="row">
 					<div class="col-md-3">
 							<div class="row">
-								<div class="col-md-6">Nom</div>
-								<div class="col-md-6 ">Prénom</div>
+								<div class="col-md-6 second_name">Nom</div>
+								<div class="col-md-6 name">Prénom</div>
 							</div>
 					</div>
 					<div class="col-md-3 col-md-offset-6">
-						<p>Supprimer</p>
+						<button>Supprimer</button>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-3 col-md-offset-4">
-						<img src="img/profil.jpg" alt="pdp">
+						<img src="img/profil.jpg" alt="pdp" class="profil">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4">
-						<h4>Status:</h4>
-						<form action="#" method="post">
+						<h4>statut: <span></span> </h4>
+						<form action="#" method="post" id="">
 							<input type="radio" name="etat" value="present">Présent
 							<input type="radio" name="etat" value="absent">Absent
 							<input type="radio" name="etat" value="retard">Retard

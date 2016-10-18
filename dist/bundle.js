@@ -40,32 +40,176 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _student_list = __webpack_require__(22);
+	var _student_list = __webpack_require__(1);
 
-	var _student_list2 = _interopRequireDefault(_student_list);
+	var student_list = _interopRequireWildcard(_student_list);
 
-	var _student = __webpack_require__(21);
+	var _student = __webpack_require__(4);
 
 	var _student2 = _interopRequireDefault(_student);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var students = [new _student2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _student2.default('Victor', 'Mutton', 'img/victor.jpg')];
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	(0, _student_list2.default)(students);
+	var students = [new _student2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _student2.default('Victor', 'Moutton', 'img/victor.jpg')];
 
+	student_list.init(students);
 	console.log('app loaded');
 
 /***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 5:
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.init = undefined;
+
+	var _jquery = __webpack_require__(2);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _detailled_card = __webpack_require__(3);
+
+	var _detailled_card2 = _interopRequireDefault(_detailled_card);
+
+	var _student = __webpack_require__(4);
+
+	var _student2 = _interopRequireDefault(_student);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var students_array = null;
+
+	var id_card_selected = null;
+
+	var $original = null;
+
+	function init(students) {
+
+		students_array = students;
+
+		$original = (0, _jquery2.default)('#student-list li').detach();
+
+		for (var i = 0; i < students.length; i++) {
+
+			var $clone = $original.clone();
+
+			var $second_name = $clone.find('.card_second_name');
+			$second_name.text(students[i].second_name);
+
+			var $name = $clone.find('.card_name');
+			$name.text(students[i].name);
+
+			var $score = $clone.find('.card_score');
+			$score.text(students[i].score + ' point(s)');
+
+			var $icone = $clone.find('img');
+			$icone.attr('src', students[i].icone);
+
+			(0, _jquery2.default)('#student-list ul').append($clone);
+		}
+
+		(0, _jquery2.default)('#student-list').on('click', 'li', function () {
+			(0, _jquery2.default)('#student-list li div').removeClass('selected');
+			(0, _jquery2.default)(this).children('.panel').addClass('selected');
+			id_card_selected = (0, _jquery2.default)('#student-list li').index(this);
+			var student = students[id_card_selected];
+			(0, _detailled_card2.default)(student);
+		});
+
+		(0, _jquery2.default)('#student-list form').on('change', 'input', function (e) {
+			var $student_in_list = (0, _jquery2.default)('#student-list li').eq(id_card_selected);
+			students[id_card_selected].statut = $student_in_list.find('form input:checked').val();
+			$student_in_list.find('form').remove();
+			$student_in_list.find('.card_statut').text(students[id_card_selected].statut);
+		});
+
+		(0, _jquery2.default)('#add_student').on('click', function () {
+			add_panel();
+		});
+
+		(0, _jquery2.default)('#detailled_card button').on('click', function () {
+			delete_student(id_card_selected);
+			console.log(id_card_selected);
+		});
+	}
+
+	function add_panel() {
+		var $clone = $original.clone();
+
+		var $second_name = $clone.find('.card_second_name');
+		$second_name.html('<input>');
+		$second_name.find('input').attr('placeholder', 'Nom de famille');
+		$second_name.find('input').addClass('new_second_name');
+
+		var $name = $clone.find('.card_name');
+		$name.html('<input>');
+		$name.find('input').attr('placeholder', 'Nom');
+		$name.find('input').addClass('new_name');
+
+		var $score = $clone.find('.card_score');
+		$score.empty();
+
+		var $img = (0, _jquery2.default)('<img>');
+		$img.addClass('bouton');
+		$img.addClass('validate');
+		$img.attr('src', 'img/validation.png');
+
+		$score.parent().append($img);
+
+		(0, _jquery2.default)('#student-list ul').append($clone);
+
+		(0, _jquery2.default)('.validate').on('click', function () {
+			var $parent = (0, _jquery2.default)(this).parent();
+			add_student($parent.find('input.new_name').val(), $parent.find('input.new_second_name').val());
+
+			var i = id_card_selected;
+			console.log(students_array[i], id_card_selected);
+
+			students_array[i].statut = $parent.find('form input:checked').val();
+			$parent.find('form').remove();
+			$parent.find('.card_statut').text(students_array[i].statut);
+
+			$parent.find('input').remove();
+			$parent.find('.validate').remove();
+
+			var $second_name = $parent.find('.card_second_name');
+			$second_name.text(students_array[i].second_name);
+
+			var $name = $parent.find('.card_name');
+			$name.text(students_array[i].name);
+
+			var $score = $parent.find('.card_score');
+			$score.text(students_array[i].score + ' point(s)');
+
+			var $icone = $parent.find('img');
+			$icone.attr('src', students_array[i].icone);
+		});
+	}
+
+	function add_student(name, second_name) {
+		var new_student = new _student2.default(name, second_name);
+		students_array.push(new_student);
+	}
+
+	function delete_student(id) {
+		students_array.splice(id, 1);
+		(0, _jquery2.default)('#student-list li').eq(id).remove();
+	}
+	exports.init = init;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10291,8 +10435,32 @@
 
 
 /***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 21:
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = write_detailled_card;
+
+	var _jquery = __webpack_require__(2);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function write_detailled_card(student) {
+		var card = (0, _jquery2.default)('#detailled_card');
+		card.find('.second_name').text(student.second_name);
+		card.find('.name').text(student.name);
+		card.find('img').attr('src', student.icone);
+		card.find('h4:first').children().text(student.statut);
+	};
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10308,60 +10476,12 @@
 
 		this.name = name;
 		this.second_name = second_name;
-		this.icone = icone;
-		this.status = "Present";
+		this.icone = icone || 'img/default.jpg';
+		this.statut = "";
 		this.score = 0;
 	};
 
 	exports.default = _class;
 
-/***/ },
-
-/***/ 22:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = init;
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function init(students) {
-		var $original = (0, _jquery2.default)('#student-list li').detach();
-
-		for (var i = 0; i < students.length; i++) {
-			var $clone = $original.clone();
-
-			var $second_name = $clone.find('.card_second_name');
-			$second_name.text(students[i].second_name);
-
-			var $name = $clone.find('.card_name');
-			$name.text(students[i].name);
-
-			var $status = $clone.find('.card_status');
-			$status.text(students[i].status);
-
-			var $score = $clone.find('.card_score');
-			$score.text(students[i].score);
-
-			var $icone = $clone.find('img');
-			$icone.attr('src', students[i].icone);
-
-			(0, _jquery2.default)('#student-list').append($clone);
-		}
-
-		(0, _jquery2.default)('#student-list').on('click', 'li', function () {
-			(0, _jquery2.default)('#fat_card');
-		});
-	}
-
 /***/ }
-
-/******/ });
+/******/ ]);
