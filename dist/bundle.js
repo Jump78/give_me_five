@@ -113,8 +113,8 @@
 			var $score = $clone.find('.card_score');
 			$score.text(students[i].score + ' point(s)');
 
-			var $icone = $clone.find('img');
-			$icone.attr('src', students[i].icone);
+			var $icone = $clone.find('.profil');
+			$icone.css('background-image', 'url(' + students[i].icone + ')');
 
 			(0, _jquery2.default)('#student-list ul').append($clone);
 		}
@@ -160,12 +160,12 @@
 		var $score = $clone.find('.card_score');
 		$score.empty();
 
-		var $img = (0, _jquery2.default)('<img>');
-		$img.addClass('bouton');
-		$img.addClass('validate');
-		$img.attr('src', 'img/validation.png');
+		var $icone_validate = (0, _jquery2.default)('<img>');
+		$icone_validate.addClass('bouton');
+		$icone_validate.addClass('validate');
+		$icone_validate.attr('src', 'img/validation.png');
 
-		$score.parent().append($img);
+		$score.parent().append($icone_validate);
 
 		(0, _jquery2.default)('#student-list ul').append($clone);
 
@@ -10455,7 +10455,7 @@
 		var card = (0, _jquery2.default)('#detailled_card');
 		card.find('.second_name').text(student.second_name);
 		card.find('.name').text(student.name);
-		card.find('img').attr('src', student.icone);
+		card.find('.profil').css('background-image', 'url(' + student.icone + ')');
 		card.find('h4:first').children().text(student.statut);
 	};
 

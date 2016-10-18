@@ -27,8 +27,8 @@ function init(students){
 		let $score = $clone.find('.card_score');
 		$score.text(students[i].score+' point(s)');
 		
-		let $icone = $clone.find('img');
-		$icone.attr('src',students[i].icone);
+		let $icone = $clone.find('.profil');
+		$icone.css('background-image','url('+students[i].icone+')');
 		
 		$('#student-list ul').append($clone);
 	}
@@ -74,12 +74,12 @@ function add_panel(){
 	let $score = $clone.find('.card_score');
 	$score.empty();
 
-	let $img = $('<img>');
-	$img.addClass('bouton');
-	$img.addClass('validate');
-	$img.attr('src','img/validation.png');
+	let $icone_validate = $('<img>');
+	$icone_validate.addClass('bouton');
+	$icone_validate.addClass('validate');
+	$icone_validate.attr('src','img/validation.png');
 
-	$score.parent().append($img);
+	$score.parent().append($icone_validate);
 
 	$('#student-list ul').append($clone);
 	

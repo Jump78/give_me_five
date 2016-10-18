@@ -21,6 +21,11 @@ li.list-group-item{
 	width: 10em;
 	height: 10em;
 	border-radius: 50%;
+	background-image: url('../img/default.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+
 }
 
 .container{
