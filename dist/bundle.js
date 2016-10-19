@@ -168,7 +168,6 @@
 
 	function add_student(arg) {
 		var balise = arg.data[0];
-
 		var name = balise.find('input[name=name]').val();
 		var second_name = balise.find('input[name=second_name]').val();
 		var id = balise.id;

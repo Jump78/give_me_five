@@ -81,7 +81,6 @@ function add_panel(){
 
 function add_student(arg){
 	let balise = arg.data[0];
-
 	let name = balise.find('input[name=name]').val();
 	let second_name = balise.find('input[name=second_name]').val();
 	let id = balise.id;
