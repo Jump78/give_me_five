@@ -130,8 +130,20 @@
 		(0, _jquery2.default)('#student-list form').on('change', 'input', function (e) {
 			var $student_in_list = (0, _jquery2.default)('#student-list li').eq(id_card_selected);
 			students[id_card_selected].statut = $student_in_list.find('form input:checked').val();
-			$student_in_list.find('form').remove();
 			$student_in_list.find('.card_statut').text(students[id_card_selected].statut);
+			$student_in_list.find('form').remove();
+
+			if (students[id_card_selected].statut == 'present') {
+				students[id_card_selected].score += 10;
+			} else if (students[id_card_selected].statut == 'retard') {
+				students[id_card_selected].score -= 2;
+			} else {
+				students[id_card_selected].score -= 10;
+			}
+
+			console.log(students[id_card_selected].score);
+
+			$student_in_list.find('.card_score').text(students[id_card_selected].score + ' point(s)');
 		});
 
 		(0, _jquery2.default)('#add_student').on('click', function () {
@@ -140,7 +152,6 @@
 
 		(0, _jquery2.default)('#detailled_card button').on('click', function () {
 			delete_student(id_card_selected);
-			console.log(id_card_selected);
 		});
 	}
 
@@ -10457,6 +10468,14 @@
 		card.find('.name').text(student.name);
 		card.find('.profil').css('background-image', 'url(' + student.icone + ')');
 		card.find('h4:first').children().text(student.statut);
+		var input = card.find('form').children('input');
+		for (var i = 0; i < input.length; i++) {
+			(0, _jquery2.default)(input[i]).removeAttr('checked');
+			console.log('kek');
+			if ((0, _jquery2.default)(input[i]).val() == student.statut) {
+				(0, _jquery2.default)(input[i]).attr('checked', true);
+			}
+		}
 	};
 
 /***/ },

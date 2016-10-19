@@ -29,7 +29,7 @@ li.list-group-item{
 }
 
 .container{
-	background-color: orange;
+	background-color: #FF8300;
 }
 
 
@@ -39,6 +39,14 @@ li.list-group-item{
 
 
 
-input{
-	border-radius: 25px;
+div.input-group{
+	margin-bottom: 2px;
+} 
+
+.label-custom{
+	display: block;
+	line-height: 2;
+	border-radius: 0;
+	border-top-right-radius: 5px;
+	margin: 0;
 }

@@ -44,8 +44,20 @@ function init(students){
 	$('#student-list form').on('change','input',function(e){
 		let $student_in_list = $('#student-list li').eq(id_card_selected);
 		students[id_card_selected].statut = $student_in_list.find('form input:checked').val();
-		$student_in_list.find('form').remove();
 		$student_in_list.find('.card_statut').text(students[id_card_selected].statut)
+		$student_in_list.find('form').remove();
+		
+		if (students[id_card_selected].statut == 'present') {
+			students[id_card_selected].score += 10;
+		}else if (students[id_card_selected].statut == 'retard') {
+			students[id_card_selected].score -= 2;
+		}else{
+			students[id_card_selected].score -= 10;
+		}
+
+		console.log(students[id_card_selected].score);
+
+		$student_in_list.find('.card_score').text(students[id_card_selected].score+' point(s)');
 	});
 
 	$('#add_student').on('click',function(){
@@ -54,7 +66,6 @@ function init(students){
 
 	$('#detailled_card button').on('click',function(){
 		delete_student(id_card_selected);
-		console.log(id_card_selected)
 	})	
 }
 
