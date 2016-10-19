@@ -1,34 +1,31 @@
 import $ from 'jquery';
-import write_detailled_card from './detailled_card';
+import * as detailled_card from './detailled_card';
 import Student from './student.class';
 
 let students_array = null;
 
+let student_selected = null;
+
 let id_card_selected = null;
 
-let $original = null;
+let $original_card = null;
+
+let $original_sign_up_card = null;
 
 function init(students){
 
 	students_array = students;
 
-	$original = $('#student-list li').detach();
+	$original_card = $('#student-list li:first').detach();
+	
+	$original_sign_up_card = $('#student-list li').detach();
 		
+
 	for (let i = 0; i < students.length; i++) {
 
-		let $clone = $original.clone();
-
-		let $second_name = $clone.find('.card_second_name');
-		$second_name.text(students[i].second_name);
-		
-		let $name = $clone.find('.card_name');
-		$name.text(students[i].name);
-		
-		let $score = $clone.find('.card_score');
-		$score.text(students[i].score+' point(s)');
-		
-		let $icone = $clone.find('.profil');
-		$icone.css('background-image','url('+students[i].icone+')');
+		let $clone = $original_card.clone();
+	
+		update_card($clone,students[i]);
 		
 		$('#student-list ul').append($clone);
 	}
@@ -36,28 +33,30 @@ function init(students){
 	$('#student-list').on('click','li',function(){
 		$('#student-list li div').removeClass('selected');
 		$(this).children('.panel').addClass('selected');
+		
 		id_card_selected = $('#student-list li').index(this);
-		let student = students[id_card_selected];
-		write_detailled_card(student);
+		
+		student_selected = students[id_card_selected];
+		
+		detailled_card.update(student_selected);
 	});
 
 	$('#student-list form').on('change','input',function(e){
 		let $student_in_list = $('#student-list li').eq(id_card_selected);
-		students[id_card_selected].statut = $student_in_list.find('form input:checked').val();
-		$student_in_list.find('.card_statut').text(students[id_card_selected].statut)
-		$student_in_list.find('form').remove();
+		student_selected.statut = $student_in_list.find('form input:checked').val();
+
+		update_card($student_in_list,student_selected);
 		
-		if (students[id_card_selected].statut == 'present') {
-			students[id_card_selected].score += 10;
-		}else if (students[id_card_selected].statut == 'retard') {
-			students[id_card_selected].score -= 2;
+		if (student_selected.statut == 'present') {
+			student_selected.score += 10;
+		}else if (student_selected.statut == 'retard') {
+			student_selected.score -= 2;
 		}else{
-			students[id_card_selected].score -= 10;
+			student_selected.score -= 10;
 		}
+	
+		detailled_card.update(student_selected);
 
-		console.log(students[id_card_selected].score);
-
-		$student_in_list.find('.card_score').text(students[id_card_selected].score+' point(s)');
 	});
 
 	$('#add_student').on('click',function(){
@@ -70,69 +69,58 @@ function init(students){
 }
 
 function add_panel(){
-	let $clone = $original.clone();
-		
-	let $second_name = $clone.find('.card_second_name');
-	$second_name.html('<input>');
-	$second_name.find('input').attr('placeholder','Nom de famille');
-	$second_name.find('input').addClass('new_second_name');
+	let $sign_up_clone = $original_sign_up_card.clone();
+	$sign_up_clone.id = $('#student-list li').length;
+	$('#student-list ul').append($sign_up_clone);
 	
-	let $name = $clone.find('.card_name');
-	$name.html('<input>');
-	$name.find('input').attr('placeholder','Nom');
-	$name.find('input').addClass('new_name');
-	
-	let $score = $clone.find('.card_score');
-	$score.empty();
-
-	let $icone_validate = $('<img>');
-	$icone_validate.addClass('bouton');
-	$icone_validate.addClass('validate');
-	$icone_validate.attr('src','img/validation.png');
-
-	$score.parent().append($icone_validate);
-
-	$('#student-list ul').append($clone);
-	
-	$('.validate').on('click',function() {
-		let $parent = $(this).parent();
-		add_student($parent.find('input.new_name').val(),$parent.find('input.new_second_name').val());
-
-		let i = id_card_selected;
-		console.log(students_array[i],id_card_selected);
-		
-		students_array[i].statut = $parent.find('form input:checked').val();
-		$parent.find('form').remove();
-		$parent.find('.card_statut').text(students_array[i].statut)
-
-		$parent.find('input').remove();
-		$parent.find('.validate').remove();
-
-		
-		let $second_name = $parent.find('.card_second_name');
-		$second_name.text(students_array[i].second_name);
-		
-		let $name = $parent.find('.card_name');
-		$name.text(students_array[i].name);
-		
-		let $score = $parent.find('.card_score');
-		$score.text(students_array[i].score+' point(s)');
-		
-		let $icone = $parent.find('img');
-		$icone.attr('src',students_array[i].icone);
-
-	});
+	$sign_up_clone.find('.validate').on('click',[
+		$sign_up_clone
+	],add_student);
 	
 }
 
-function add_student(name,second_name){
-	let new_student = new Student(name,second_name);
-	students_array.push(new_student);
+function add_student(arg){
+	let balise = arg.data[0];
 
+	let name = balise.find('input[name=name]').val();
+	let second_name = balise.find('input[name=second_name]').val();
+	let id = balise.id;
+
+	let new_student = new Student(name,second_name);
+	new_student.statut = balise.find('input[type=radio]:checked').val();
+	students_array[id]=new_student;
+	
+	let $clone = $original_card.clone();
+	update_card($clone,new_student);
+	balise.replaceWith($clone);
 }
 
 function delete_student(id){
 	students_array.splice(id,1);
 	$('#student-list li').eq(id).remove();
+}
+
+function update_card(balise,student) {
+	if (student.second_name)
+	balise.find('.card_second_name')
+	.text(student.second_name);
+
+	if (student.name)
+	balise.find('.card_name')
+	.text(student.name);
+	
+	if (typeof student.score === 'number')
+	balise.find('.card_score')
+	.text(student.score+' point(s)');
+	
+	if (student.icone)
+	balise.find('.avatar_list')
+	.css('background-image','url('+student.icone+')');
+
+	if (student.statut != ""){
+		balise.find('form').remove();
+		balise.find('.card_statut').text(student.statut);
+	}
+
 }
 export {init}

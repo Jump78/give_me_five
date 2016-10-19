@@ -1,5 +1,6 @@
 import * as student_list   from './student_list';
 import Student from './student.class';
+import moment from './moment.js';
 
 let students = [
 					new Student('Clement','Teboul','img/clementT.jpg'),
