@@ -17,7 +17,7 @@ li.list-group-item{
 	background-color: transparent;
 }
 
-.avatar_list{
+.avatar{
 	width: 10em;
 	height: 10em;
 	border-radius: 50%;
@@ -29,7 +29,7 @@ li.list-group-item{
 }
 
 .container{
-	background-color: #FF8300;
+	background-color: #ddd;
 }
 
 

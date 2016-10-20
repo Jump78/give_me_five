@@ -1,23 +1,72 @@
 import $ from 'jquery';
+import {get_selected_student} from './student_list';
 
+let $card = null;
+let $stat_container = null;
+let $original_row = null;
+
+function init(){
+	$card = $('#detailled_card');
+	
+	$stat_container = $card.find('.container_stat');
+
+	$stat_container.find('.stat_increase').on('click',function(){
+		let indice	 = $(this).parents('.row').index();
+		let student = get_selected_student();
+		let prop = Object.keys(student.stat);
+		
+		if (indice<3 && student.apelle == false) {
+			student.update_stat(student.statut,-1);
+			student.update_stat(prop[indice],1);
+			student.statut = prop[indice];			
+			student.apelle = true;
+		}else if(indice>=3){
+			student.update_stat(prop[indice],1);
+			
+		}
+		update(student);
+	});
+
+	$stat_container.find('.stat_decrease').on('click',function(){
+		let indice	 = $(this).parents('.row').index();
+		let student = get_selected_student();
+		let prop = Object.keys(student.stat);
+		if (indice<3 && student.apelle == true) {
+			student.update_stat(prop[indice],-1);
+			student.apelle = false;
+		}else if(indice>=3){
+			student.update_stat(prop[indice],-1);
+		}
+					console.log(student);
+
+		update(student);
+
+	});
+
+	$original_row = $stat_container.find('.row').detach();
+	$card.hide();
+}
 
 function update(student){
-	let card = $('#detailled_card');
-	card.find('.second_name').text(student.second_name);
-	card.find('.name').text(student.name);
-	card.find('.avatar_list').css('background-image','url('+student.icone+')');	card.find('h4:first').children().text(student.statut);
+	if ($card.find('input').val()!='') $card.find('input').val('');
+	$card.find('input[name=second_name]').val(student.second_name);
+	$card.find('input[name=name]').val(student.name);
 	
-	let input = card.find('form').children('input');
+	$card.find('.avatar').css('background-image','url('+student.icone+')');	
+	//$card.find('h4:first').children().text(student.statut);
+	$stat_container.empty();	
+
+	for (let stat in student.stat) {
+		let $clone = $original_row.clone(true);
+		$clone.find('.stat_name').text(stat);
+		$clone.find('.stat_value').text(student.stat[stat]);
 	
-	for (var i = 0; i < input.length; i++) {
-		$(input[i]).removeAttr('checked');
-		console.log('kek');
-		if ($(input[i]).val() == student.statut){
-			$(input[i]).attr('checked',true);
-		}
+		$stat_container.append($clone);
 	}
+
+	$card.show();
 };
 
-export {update}
+export {init,update}
 
 

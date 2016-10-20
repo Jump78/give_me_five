@@ -19,8 +19,7 @@ function init(students){
 	$original_card = $('#student-list li:first').detach();
 	
 	$original_sign_up_card = $('#student-list li').detach();
-		
-
+	
 	for (let i = 0; i < students.length; i++) {
 
 		let $clone = $original_card.clone();
@@ -45,16 +44,16 @@ function init(students){
 		let $student_in_list = $('#student-list li').eq(id_card_selected);
 		student_selected.statut = $student_in_list.find('form input:checked').val();
 
-		update_card($student_in_list,student_selected);
 		
 		if (student_selected.statut == 'present') {
-			student_selected.score += 10;
+			student_selected.update_stat('presence',1);
 		}else if (student_selected.statut == 'retard') {
-			student_selected.score -= 2;
+			student_selected.update_stat('retard',1);
 		}else{
-			student_selected.score -= 10;
+			student_selected.update_stat('absence',1);
 		}
 	
+		update_card($student_in_list,student_selected);
 		detailled_card.update(student_selected);
 
 	});
@@ -63,9 +62,17 @@ function init(students){
 		add_panel();
 	});
 
-	$('#detailled_card button').on('click',function(){
+	$('#detailled_card #delete').on('click',function(){
 		delete_student(id_card_selected);
-	})	
+	});
+
+	$('#detailled_card #update').on('click',function(){
+		student_selected.name = $('#detailled_card').find('input[name=name]').val(); 
+		student_selected.second_name = $('#detailled_card').find('input[name=second_name]').val(); 
+		
+		let $balise = $('#student-list li').eq(id_card_selected); 
+		update_card($balise,student_selected);
+	})
 }
 
 function add_panel(){
@@ -87,6 +94,15 @@ function add_student(arg){
 
 	let new_student = new Student(name,second_name);
 	new_student.statut = balise.find('input[type=radio]:checked').val();
+	
+	if (new_student.statut == 'present') {
+		new_student.update_stat('presence',1);
+	}else if (new_student.statut == 'retard') {
+		new_student.update_stat('retard',1);
+	}else{
+		new_student.update_stat('absence',1);
+	}
+	
 	students_array[id]=new_student;
 	
 	let $clone = $original_card.clone();
@@ -113,13 +129,19 @@ function update_card(balise,student) {
 	.text(student.score+' point(s)');
 	
 	if (student.icone)
-	balise.find('.avatar_list')
+	balise.find('.avatar')
 	.css('background-image','url('+student.icone+')');
 
 	if (student.statut != ""){
 		balise.find('form').remove();
+		student.apelle = true;
 		balise.find('.card_statut').text(student.statut);
+		console.log(student.statut);
 	}
 
 }
-export {init}
+
+function get_selected_student(){
+	return student_selected
+}
+export {init,get_selected_student}
