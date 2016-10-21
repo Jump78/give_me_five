@@ -1,5 +1,5 @@
-import Stat from './stat.class.js';
-import data from './data';
+import Stat from './stat.class';
+import {barem} from './data';
 
 export default class{
 	constructor(name, second_name, icone){
@@ -15,7 +15,7 @@ export default class{
 	update_score(){
 		this.score = 0;
 		for(let prop in this.stat){
-			this.score += this.stat[prop]*data.barem[prop];
+			this.score += this.stat[prop]*barem[prop];
 		}
 	}
 
@@ -24,5 +24,35 @@ export default class{
 
 		if ( nb_point >= 0) this.stat[stat] += nb;
 		this.update_score();
+	}
+
+	show_property_name(name){
+		let result ='';
+		switch(name){
+			case 'presence':
+				result = 'Présence';
+			break;
+			
+			case 'absence':
+				result = 'Absence';
+			break;
+
+			case 'retard':
+				result = 'Retard';
+			break;
+
+			case 'participation':
+				result = 'Participation';
+			break;
+
+			case 'passage_au_tableau':
+				result = 'Passage au tableau'
+			break;
+				
+			default:
+				result = '';
+			break;
+		}
+		return result;
 	}
 }

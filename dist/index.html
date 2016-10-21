@@ -1,34 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Give me five</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-2 col-md-offset-3">
-				<img src="img/plus.png" alt="bouton_plus" id="add_student" class="bouton">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Give me five</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<div class="container">
+			<!-- Row contenant le titre et l'icone -->
+			<div class="row">
+				<div class="col-md-7 text-right">
+					<h1>Give me 5</h1>
+				</div>
+				<div class="col-md-5 text-left">
+					<div class="logo"></div>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4" id="student-list">
-				<ul class="list-group">
-					<li class="list-group-item">
-						<div class="panel panel-default">
-						 	<div class="panel-body">
-							 	<div class="row">
-							 		<div class="col-md-6">
-										<div class="avatar">
-											
+			<!-- Row contenant la liste des élèves -->
+			<div class="row">
+				<!--Bouton d'ajout d'élève -->
+				<div class="col-md-2 col-md-offset-3">
+					<img src="img/plus.png" alt="bouton_plus" id="add_student" class="bouton bg-bleu">
+				</div>
+			</div>
+			<!-- Liste des élèves -->
+			<div class="row">
+				<div class="col-md-4" id="student-list">
+					<ul class="list-group">
+						<!-- Li modele,sous forme de panel  -->
+						<li class="list-group-item">
+							<div class="panel panel-default">
+							 	<div class="panel-body">
+								 	<div class="row">
+								 	<!-- Avatar de l'élève-->
+								 		<div class="col-md-6">
+											<div class="avatar">
+												
+											</div>
+								  		</div>
+								  		<!-- Informations de l'élève -->
+										<div class="col-md-6">
+									    	<p class="card_second_name">Nom: </p>
+									    	<p class="card_name">Prénom: </p>
+											<form action="#" method="post">
+												<div class="input-group input-group-sm">
+													<span class="input-group-addon">
+														<input type="radio" name="statut" value="present" aria-label="present">
+													</span>	
+													<label for="present" class="label label-success label-custom">Présent</label>
+												</div>
+												
+												<div class="input-group input-group-sm">
+													<span class="input-group-addon">
+														<input type="radio" name="statut" value="absent" aria-label="absent">
+													</span>	
+													<label for="absent" class="label label-danger label-custom">Abscent</label>
+												</div>
+												
+												<div class="input-group input-group-sm">
+													<span class="input-group-addon">
+														<input type="radio" name="statut" value="retard" aria-label="retard">
+													</span>	
+													<label for="retard" class="label label-warning label-custom">Retard</label>
+												</div>
+											</form>	
+											<p class="card_statut"></p>		    
+											<p class="card_score">Score: </p>	  	
 										</div>
 							  		</div>
-									<div class="col-md-6">
-								    	<p class="card_second_name">Nom: </p>
-								    	<p class="card_name">Prénom: </p>
-										<form action="#" method="post">
+								</div>
+							</div>
+						</li>
+						<!-- Li modele de carte d'ajout d'élève -->
+						<li class="list-group-item">
+							<div class="panel panel-default">
+							 	<div class="panel-body">
+								 	<div class="row">
+								 		<!-- Avatar du nouvel eleve-->
+								 		<div class="col-md-6">
+											<div class="avatar">
+												
+											</div>
+											<input type="file">
+								  		</div>
+								  		<!-- Saisi des informations de l'élève-->
+										<div class="col-md-6">
+											<div class="input-group input-group-sm">
+												<input type="text" name="name" placeholder="Inserez le prénom" class="form-control" aria-describedby="sizing-name">
+											</div>
+											
+											<div class="input-group input-group-sm">
+												<input type="text" name="second_name" placeholder="Inserez le nom" class="form-control" aria-describedby="sizing-second-name">
+											</div>
+												
 											<div class="input-group input-group-sm">
 												<span class="input-group-addon">
 													<input type="radio" name="statut" value="present" aria-label="present">
@@ -49,125 +114,97 @@
 												</span>	
 												<label for="retard" class="label label-warning label-custom">Retard</label>
 											</div>
-										</form>	
-										<p class="card_statut"></p>		    
-										<p class="card_score">Score: </p>	  	
-									</div>
-						  		</div>
-							</div>
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div class="panel panel-default">
-						 	<div class="panel-body">
-							 	<div class="row">
-							 		<div class="col-md-6">
-										<div class="avatar">
-											
+											<!-- Icone de validation du nouvel élève -->
+											<div class="row">
+												<div class="col-md-12 text-right">
+													<img src="img/validation.png" alt="Valider" class="bouton validate">
+												</div>
+											</div>
 										</div>
-										<input type="file">
 							  		</div>
-									<div class="col-md-6">
-										<div class="input-group input-group-sm">
-											<input type="text" name="name" placeholder="Inserez le prénom" class="form-control" aria-describedby="sizing-name">
-										</div>
-										
-										<div class="input-group input-group-sm">
-											<input type="text" name="second_name" placeholder="Inserez le nom" class="form-control" aria-describedby="sizing-second-name">
-										</div>
-											
-										<div class="input-group input-group-sm">
-											<span class="input-group-addon">
-												<input type="radio" name="statut" value="present" aria-label="present">
-											</span>	
-											<label for="present" class="label label-success label-custom">Présent</label>
-										</div>
-										
-										<div class="input-group input-group-sm">
-											<span class="input-group-addon">
-												<input type="radio" name="statut" value="absent" aria-label="absent">
-											</span>	
-											<label for="absent" class="label label-danger label-custom">Abscent</label>
-										</div>
-										
-										<div class="input-group input-group-sm">
-											<span class="input-group-addon">
-												<input type="radio" name="statut" value="retard" aria-label="retard">
-											</span>	
-											<label for="retard" class="label label-warning label-custom">Retard</label>
-										</div>
-
-										<img src="img/validation.png" alt="Valider" class="bouton validate">
-									</div>
-						  		</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-  			</div>
-			<div class="col-md-7 col-md-offset-1" id="detailled_card">
-				<div class="row">
-					<div class="col-md-5">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group">
-									<input type="text" name="second_name" placeholder="Inserez le nom" class="form-control">
 								</div>
 							</div>
-							<div class="col-md-6 name">
-								<div class="input-group">
-								<input type="text" name="name" placeholder="Inserez le prénom" class="form-control">
-								</div>			
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="row">
-					<div class="col-md-3 col-md-offset-4">
-						<div class="avatar"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="row">
-							<h4>Statistiques : <span></span> </h4>
-						</div>
-						<div class="row container_stat">
+						</li>
+					</ul>
+	  			</div>
+	  			<!-- Div ou apparaitra les infos detaillés de chaque elèves-->
+				<div class="col-md-7 col-md-offset-1" id="detailled_card">
+					<div class="row">
+						<div class="col-md-5">
 							<div class="row">
-								<div class="col-md-3">
-									<p class="stat_name"></p>
+								<!--Saisie du nom -->
+								<div class="col-md-6">
+									<div class="input-group">
+										<input type="text" name="second_name" placeholder="Inserez le nom" class="form-control">
+									</div>
 								</div>
-							
-								<div class="col-md-3 text-center">
-									<p class="stat_value"></p>
-								</div>							
-							
-								<div class="col-md-2">
-									<a class="stat_increase btn btn-success">+</a>
-								</div>			
-							
-								<div class="col-md-2">
-									<a class="stat_decrease btn btn-danger">-</a>
+								<!--Saisie du prénom -->
+								<div class="col-md-6 name">
+									<div class="input-group">
+									<input type="text" name="name" placeholder="Inserez le prénom" class="form-control">
+									</div>			
 								</div>
 							</div>
 						</div>
+						<div class="col-md-2 col-md-offset-4">
+							<p class="statut"></p>
+						</div>
 					</div>
-					<div class="col-md-4 col-md-offset-2">
-						<h4>Historique</h4>
+					<!-- Row contenant l'avatar -->
+					<div class="row">
+						<div class="col-md-3 col-md-offset-4">
+							<div class="avatar"></div>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<button id="update">Modifier</button>
+					<!-- Input file pour modifié l'avatar -->
+					<div class="row">
+						<div class="col-md-4 col-md-offset-3">
+							<input type="file">
+						</div>
 					</div>
-					<div class="col-md-3 col-md-offset-6">
-						<button id="delete">Supprimer</button>
+					<!-- Zone d'affichage des statistiques de l'élève -->
+					<div class="row">
+						<div class="col-md-8">
+							<div class="row">
+								<h4>Statistiques : <span></span> </h4>
+							</div>
+							<div class="row container_stat">
+								<div class="row">
+									<div class="col-md-3">
+										<p class="stat_name"></p>
+									</div>
+								
+									<div class="col-md-3 text-right">
+										<p class="stat_value"></p>
+									</div>					
+									<div class="col-md-2">
+										<a class="stat_increase btn btn-success">+</a>
+									</div>			
+								
+									<div class="col-md-2">
+										<a class="stat_decrease btn btn-danger">-</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Div contenant l'historique de presence de l'élève -->
+						<div class="col-md-3 col-md-offset-1">
+							<h4>Historique</h4>
+						</div>
+					</div>
+					<div class="row">
+						<!-- Validation des changents -->
+						<div class="col-md-3">
+							<a id="update" class="btn btn-success">Modifier l'élèves</a>
+						</div>
+						<!-- Suppression de l'élève -->
+						<div class="col-md-3 col-md-offset-5 text-left">
+							<a id="delete" class="btn btn-danger">Supprimer l'élèves</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<script src="bundle.js"></script>
-</body>
+		<script src="bundle.js"></script>
+	</body>
 </html>

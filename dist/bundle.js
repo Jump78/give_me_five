@@ -46,30 +46,25 @@
 
 	'use strict';
 
-	var _moment = __webpack_require__(1);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
 	var _student_list = __webpack_require__(3);
 
-	var student_list = _interopRequireWildcard(_student_list);
-
 	var _detailled_card = __webpack_require__(5);
-
-	var detailled_card = _interopRequireWildcard(_detailled_card);
 
 	var _student = __webpack_require__(6);
 
 	var _student2 = _interopRequireDefault(_student);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _save = __webpack_require__(9);
+
+	var _load = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var students = [new _student2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _student2.default('Victor', 'Moutton', 'img/victor.jpg')];
+	//import {init as save_init} from './save';
 
-	student_list.init(students);
-	detailled_card.init();
+	var students = [new _student2.default('Clement', 'Teboul', 'img/clementT.jpg'), new _student2.default('Victor', 'Moutton', 'img/victor.jpg')];
+	(0, _student_list.init)(students);
+	(0, _detailled_card.init)();
 	console.log('app loaded');
 
 /***/ },
@@ -554,6 +549,7 @@
 		(0, _jquery2.default)('#detailled_card #update').on('click', function () {
 			student_selected.name = (0, _jquery2.default)('#detailled_card').find('input[name=name]').val();
 			student_selected.second_name = (0, _jquery2.default)('#detailled_card').find('input[name=second_name]').val();
+			student_selected.icone = window.URL.createObjectURL((0, _jquery2.default)('#detailled_card').find('input[type=file]')[0].files[0]);
 
 			var $balise = (0, _jquery2.default)('#student-list li').eq(id_card_selected);
 			update_card($balise, student_selected);
@@ -572,9 +568,10 @@
 		var balise = arg.data[0];
 		var name = balise.find('input[name=name]').val();
 		var second_name = balise.find('input[name=second_name]').val();
+		var icone = window.URL.createObjectURL(balise.find('input[type=file]')[0].files[0]);
 		var id = balise.id;
 
-		var new_student = new _student2.default(name, second_name);
+		var new_student = new _student2.default(name, second_name, icone);
 		new_student.statut = balise.find('input[type=radio]:checked').val();
 
 		if (new_student.statut == 'present') {
@@ -610,8 +607,9 @@
 			balise.find('form').remove();
 			student.apelle = true;
 			balise.find('.card_statut').text(student.statut);
-			console.log(student.statut);
 		}
+
+		detailled_card.update(student_selected);
 	}
 
 	function get_selected_student() {
@@ -10900,8 +10898,6 @@
 			} else if (indice >= 3) {
 				student.update_stat(prop[indice], -1);
 			}
-			console.log(student);
-
 			update(student);
 		});
 
@@ -10910,17 +10906,18 @@
 	}
 
 	function update(student) {
+		if (!$card) return;
 		if ($card.find('input').val() != '') $card.find('input').val('');
 		$card.find('input[name=second_name]').val(student.second_name);
 		$card.find('input[name=name]').val(student.name);
-
+		$card.find('p.statut').text(student.statut);
 		$card.find('.avatar').css('background-image', 'url(' + student.icone + ')');
-		//$card.find('h4:first').children().text(student.statut);
 		$stat_container.empty();
 
 		for (var stat in student.stat) {
 			var $clone = $original_row.clone(true);
-			$clone.find('.stat_name').text(stat);
+			var property_name = student.show_property_name(stat);
+			$clone.find('.stat_name').text(property_name);
 			$clone.find('.stat_value').text(student.stat[stat]);
 
 			$stat_container.append($clone);
@@ -10944,13 +10941,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _statClass = __webpack_require__(7);
+	var _stat = __webpack_require__(7);
 
-	var _statClass2 = _interopRequireDefault(_statClass);
+	var _stat2 = _interopRequireDefault(_stat);
 
 	var _data = __webpack_require__(8);
-
-	var _data2 = _interopRequireDefault(_data);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10965,7 +10960,7 @@
 			this.icone = icone || 'img/default.jpg';
 			this.statut = "";
 			this.score = 0;
-			this.stat = new _statClass2.default();
+			this.stat = new _stat2.default();
 			this.apelle = false;
 		}
 
@@ -10974,7 +10969,7 @@
 			value: function update_score() {
 				this.score = 0;
 				for (var prop in this.stat) {
-					this.score += this.stat[prop] * _data2.default.barem[prop];
+					this.score += this.stat[prop] * _data.barem[prop];
 				}
 			}
 		}, {
@@ -10984,6 +10979,37 @@
 
 				if (nb_point >= 0) this.stat[stat] += nb;
 				this.update_score();
+			}
+		}, {
+			key: 'show_property_name',
+			value: function show_property_name(name) {
+				var result = '';
+				switch (name) {
+					case 'presence':
+						result = 'Présence';
+						break;
+
+					case 'absence':
+						result = 'Absence';
+						break;
+
+					case 'retard':
+						result = 'Retard';
+						break;
+
+					case 'participation':
+						result = 'Participation';
+						break;
+
+					case 'passage_au_tableau':
+						result = 'Passage au tableau';
+						break;
+
+					default:
+						result = '';
+						break;
+				}
+				return result;
 			}
 		}]);
 
@@ -11010,7 +11036,8 @@
 		this.presence = 0;
 		this.absence = 0;
 		this.retard = 0;
-		this.yolo = 0;
+		this.participation = 0;
+		this.passage_au_tableau = 0;
 	};
 
 	exports.default = _class;
@@ -11022,16 +11049,97 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+			value: true
 	});
-	exports.default = {
-		barem: {
+	var barem = {
 			presence: 10,
 			absence: -10,
 			retard: -2,
-			yolo: 1
-		}
+			participation: 1,
+			passage_au_tableau: 1
 	};
+
+	exports.barem = barem;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.init = undefined;
+
+	var _moment = __webpack_require__(1);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _student_list = __webpack_require__(3);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function init() {
+		/*	moment.locale('fr');
+	 	let heure = moment([2016,10,20,22,0,0]);
+	 	console.log(moment().isAfter(heure));
+	 	setInterval(function(){ console.log(moment().format('LTS')) }, 3000);
+	 */}
+
+	function save(data) {
+		for (var i = 0; i < data.length; i++) {
+			data[i];
+		}
+	}
+	exports.init = init;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.load_students = undefined;
+
+	var _student = __webpack_require__(6);
+
+	var _student2 = _interopRequireDefault(_student);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var storage = localStorage.getItem("gm5");
+
+	function load_students() {
+		var object_split = storage.split("|");
+		var student = [];
+		var stat = {};
+
+		for (var i = 0; i < object_split.length - 1; i++) {
+			var prop_objet_split = object_split[i].split('[');
+			var constructor_split = prop_objet_split[0].split('-');
+			var stat_split = prop_objet_split[1].split('-');
+
+			var stat_prop_split = stat_split[0].split('+');
+
+			for (var j = 0; j < stat_prop_split.length - 1; j++) {
+
+				var stat_value_split = stat_prop_split[j].split(':');
+				stat[stat_value_split[0]] = parseInt(stat_value_split[1]);
+			}
+
+			var new_student = new _student2.default(constructor_split[0], constructor_split[1], constructor_split[2]);
+			new_student.stat = Object.assign(new_student.stat, stat);
+			student.push(new_student);
+		}
+
+		return student;
+	}
+
+	exports.load_students = load_students;
 
 /***/ }
 /******/ ]);

@@ -1,20 +1,33 @@
-.bouton{
-	width: 35px;
-	height:35px;
+/****  Style général  ****/
+@font-face {
+    font-family: 'qarmic';
+    src: url('../fonts/Qarmic_sans_Abridged.ttf');
 }
 
-.bouton:hover{
-	box-shadow: 2px 2px 5px black;
-	border-radius: 10px;
+body{
+	font-family: 'qarmic';
+	background-color: #FFEE87;
 }
 
-#studiant-list{
-	overflow: auto;
-}
+div.input-group{
+	margin-bottom: 2px;
+} 
 
 li.list-group-item{
 	border: none;
 	background-color: transparent;
+}
+
+li div.col-md-6{
+	overflow: hidden;
+}
+
+/****  Style Classe  ****/
+.logo{
+	width: 5em;
+	height: 5em;
+	background-image: url(../img/GiveMe5.png);
+	background-size: cover;
 }
 
 .avatar{
@@ -29,19 +42,28 @@ li.list-group-item{
 }
 
 .container{
-	background-color: #ddd;
+	background-color: #54A5BF;
 }
 
+.bouton{
+	width: 35px;
+	height:35px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.bouton:hover{
+	box-shadow: 2px 2px 5px black;
+	border-radius: 10px;
+}
+
+.bg-bleu{
+	background-color: #2C5587;
+}
 
 .selected{
-	box-shadow: 0px 0px 8px black;
+	box-shadow: 0px 0px 15px #fafafa;
 }
-
-
-
-div.input-group{
-	margin-bottom: 2px;
-} 
 
 .label-custom{
 	display: block;
@@ -50,3 +72,16 @@ div.input-group{
 	border-top-right-radius: 5px;
 	margin: 0;
 }
+
+/****  Style des IDs  ****/
+#student-list ul{
+	height:  38em;
+	overflow: auto;
+	background-color: #2C5587;
+	border-radius: 10px;
+}
+
+#detailled_card div.row{
+	margin-bottom: 7px;
+}
+

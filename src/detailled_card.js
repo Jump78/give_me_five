@@ -37,8 +37,6 @@ function init(){
 		}else if(indice>=3){
 			student.update_stat(prop[indice],-1);
 		}
-					console.log(student);
-
 		update(student);
 
 	});
@@ -48,17 +46,18 @@ function init(){
 }
 
 function update(student){
+	if (!$card) return;
 	if ($card.find('input').val()!='') $card.find('input').val('');
 	$card.find('input[name=second_name]').val(student.second_name);
 	$card.find('input[name=name]').val(student.name);
-	
+	$card.find('p.statut').text(student.statut);
 	$card.find('.avatar').css('background-image','url('+student.icone+')');	
-	//$card.find('h4:first').children().text(student.statut);
 	$stat_container.empty();	
 
 	for (let stat in student.stat) {
 		let $clone = $original_row.clone(true);
-		$clone.find('.stat_name').text(stat);
+		let property_name = student.show_property_name(stat);
+		$clone.find('.stat_name').text(property_name);
 		$clone.find('.stat_value').text(student.stat[stat]);
 	
 		$stat_container.append($clone);
