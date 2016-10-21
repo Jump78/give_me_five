@@ -62,7 +62,7 @@ li div.col-md-6{
 }
 
 .selected{
-	box-shadow: 0px 0px 15px #fafafa;
+	box-shadow: 0px 0px 15px black;
 }
 
 .label-custom{
@@ -75,7 +75,7 @@ li div.col-md-6{
 
 /****  Style des IDs  ****/
 #student-list ul{
-	height:  38em;
+	height:  35em;
 	overflow: auto;
 	background-color: #2C5587;
 	border-radius: 10px;
@@ -85,3 +85,6 @@ li div.col-md-6{
 	margin-bottom: 7px;
 }
 
+#date{
+	font-size: 2em;
+}

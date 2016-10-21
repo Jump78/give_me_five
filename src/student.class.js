@@ -26,7 +26,7 @@ export default class{
 		this.update_score();
 	}
 
-	show_property_name(name){
+	show_property_name_as_name(name){
 		let result ='';
 		switch(name){
 			case 'presence':
@@ -47,6 +47,28 @@ export default class{
 
 			case 'passage_au_tableau':
 				result = 'Passage au tableau'
+			break;
+				
+			default:
+				result = '';
+			break;
+		}
+		return result;
+	}
+
+	show_property_name_as_adjective(name){
+		let result ='';
+		switch(name){
+			case 'presence':
+				result = 'Présent';
+			break;
+			
+			case 'absence':
+				result = 'Absent';
+			break;
+
+			case 'retard':
+				result = 'Retard';
 			break;
 				
 			default:

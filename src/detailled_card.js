@@ -28,7 +28,7 @@ function init(){
 	});
 
 	$stat_container.find('.stat_decrease').on('click',function(){
-		let indice	 = $(this).parents('.row').index();
+		let indice	= $(this).parents('.row').index();
 		let student = get_selected_student();
 		let prop = Object.keys(student.stat);
 		if (indice<3 && student.apelle == true) {
@@ -56,7 +56,7 @@ function update(student){
 
 	for (let stat in student.stat) {
 		let $clone = $original_row.clone(true);
-		let property_name = student.show_property_name(stat);
+		let property_name = student.show_property_name_as_name(stat);
 		$clone.find('.stat_name').text(property_name);
 		$clone.find('.stat_value').text(student.stat[stat]);
 	

@@ -17,11 +17,13 @@
 					<div class="logo"></div>
 				</div>
 			</div>
-			<!-- Row contenant la liste des élèves -->
+			<div class="row">
+							<div class="col-md-12 text-center text-capitalize" id="date"></div>
+						</div>			<!-- Row contenant la liste des élèves -->
 			<div class="row">
 				<!--Bouton d'ajout d'élève -->
 				<div class="col-md-2 col-md-offset-3">
-					<img src="img/plus.png" alt="bouton_plus" id="add_student" class="bouton bg-bleu">
+					<img src="img/plus.png" alt="bouton_plus" id="add_student" class="bouton" title="Ajouter un élève">
 				</div>
 			</div>
 			<!-- Liste des élèves -->
@@ -46,14 +48,14 @@
 											<form action="#" method="post">
 												<div class="input-group input-group-sm">
 													<span class="input-group-addon">
-														<input type="radio" name="statut" value="present" aria-label="present">
+														<input type="radio" name="statut" value="presence" aria-label="present">
 													</span>	
 													<label for="present" class="label label-success label-custom">Présent</label>
 												</div>
 												
 												<div class="input-group input-group-sm">
 													<span class="input-group-addon">
-														<input type="radio" name="statut" value="absent" aria-label="absent">
+														<input type="radio" name="statut" value="absence" aria-label="absent">
 													</span>	
 													<label for="absent" class="label label-danger label-custom">Abscent</label>
 												</div>
@@ -96,14 +98,14 @@
 												
 											<div class="input-group input-group-sm">
 												<span class="input-group-addon">
-													<input type="radio" name="statut" value="present" aria-label="present">
+													<input type="radio" name="statut" value="presence" aria-label="present">
 												</span>	
 												<label for="present" class="label label-success label-custom">Présent</label>
 											</div>
 											
 											<div class="input-group input-group-sm">
 												<span class="input-group-addon">
-													<input type="radio" name="statut" value="absent" aria-label="absent">
+													<input type="radio" name="statut" value="absence" aria-label="absent">
 												</span>	
 												<label for="absent" class="label label-danger label-custom">Abscent</label>
 											</div>
@@ -117,7 +119,8 @@
 											<!-- Icone de validation du nouvel élève -->
 											<div class="row">
 												<div class="col-md-12 text-right">
-													<img src="img/validation.png" alt="Valider" class="bouton validate">
+													<img src="img/validation.png" alt="Valider" class="bouton validate"
+													title="Valider l'élève">
 												</div>
 											</div>
 										</div>
@@ -195,11 +198,11 @@
 					<div class="row">
 						<!-- Validation des changents -->
 						<div class="col-md-3">
-							<a id="update" class="btn btn-success">Modifier l'élèves</a>
+							<a id="update" class="btn btn-success" title="Sauvegarder les modifications">Modifier l'élèves</a>
 						</div>
 						<!-- Suppression de l'élève -->
 						<div class="col-md-3 col-md-offset-5 text-left">
-							<a id="delete" class="btn btn-danger">Supprimer l'élèves</a>
+							<a id="delete" class="btn btn-danger" title="Supprimer l'élève">Supprimer l'élèves</a>
 						</div>
 					</div>
 				</div>

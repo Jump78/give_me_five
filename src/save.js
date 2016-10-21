@@ -1,16 +1,32 @@
 import moment from './moment';
-import {get_student_array} from './student_list' 
 
-function init(){
-/*	moment.locale('fr');
-	let heure = moment([2016,10,20,22,0,0]);
-	console.log(moment().isAfter(heure));
-	setInterval(function(){ console.log(moment().format('LTS')) }, 3000);
-*/}
+function set_student_save(students) {
+	let student_save= {};
+	for (let i = 0; i < students.length; i++) {
+		for(let prop in students[i]){
+			student_save[students[i].name+'-'+students[i].second_name]= students[i].icone+'[';
+			let stat_save = '';
+			for(let stat in students[i].stat){
+				stat_save += stat+'+';
+				stat_save += students[i].stat[stat]+'-';
+			}
 
-function save(data) {
-	for (var i = 0; i < data.length; i++) {
-		data[i]
+			student_save[students[i].name+'-'+students[i].second_name]+=stat_save;
+		}
+
 	}
+
+	save(student_save);
 }
-export {init};
+
+function save(student_save) {
+	let result = '';
+	for(let prop in student_save){
+		result += prop+'-';
+		result += student_save[prop]+'|';
+	}
+
+	localStorage.setItem('gm5',result);
+}
+
+export {init,set_student_save};
